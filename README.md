@@ -24,5 +24,6 @@ pip3 install -r requirements.txt
 
 ```
 export FLASK_APP=api/app.py
+export FLASK_DEBUG=1
 python -m flask run
 ```
