@@ -4,8 +4,17 @@ A Personal Knowledge Base is a place to store one's personal knowledge for later
 
 ## Installation
 
-// TODO
+```bash
+python3 -m pip install --upgrade pip
+python3 -m venv kb-venv
+source kb-venv/bin/activate
+pip3 install --upgrade pip
+pip install -r requirements.txt
+```
 
 ## Usage
 
-// TODO
+```
+export FLASK_APP=api/app.py
+python -m flask run
+```
