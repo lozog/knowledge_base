@@ -15,8 +15,8 @@ def create_document(body):
     try:
         title = body["title"]
         content = body["content"]
-        parent = body["parent"]
-        children = body["children"]
+        parent = body.get("parent")
+        children = body.get("children")
     except KeyError:
         return "Data missing from request"
 
@@ -26,7 +26,6 @@ def create_document(body):
         "parent": parent,
         "children": children
     })
-
     document.save()
 
     return f"Inserted as {document.id}"
