@@ -19,7 +19,7 @@ serve() {
   export FLASK_APP=api/app.py
   export FLASK_DEBUG=1
   _load-venv
-  python -m flask run
+  python3 api/app.py
 }
 
 # Allow running tasks from commandline, e.g. `./kb serve`

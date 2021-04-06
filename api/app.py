@@ -1,31 +1,28 @@
-from flask import Flask, request
-import flask_wrappers as wrappers
+from flask import Flask
 from mongoengine import connect
-
-from documents import Document
+import routes
 
 app = Flask(__name__)
 
+app.register_blueprint(routes.blueprint)
+
 connect(host="mongodb://127.0.0.1:27017/knowledge_base")
 
+print(
+    """
+ __   ___  _______   
+|/"| /  ")|   _  "\  
+(: |/   / (. |_)  :) 
+|    __/  |:     \/  
+(// _  \  (|  _  \\  
+|: | \  \ |: |_)  :) 
+(__|  \__)(_______/  
+                     
+"""
+)
+APP_HOST="localhost"
+APP_DEBUG=True
 
-@app.route('/documents', methods=["POST"])
-@wrappers.json_request
-def create_document(body):
-    try:
-        title = body["title"]
-        content = body["content"]
-        parent = body.get("parent")
-        children = body.get("children")
-    except KeyError:
-        return "Data missing from request"
-
-    document = Document(**{
-        "title": title,
-        "content": content,
-        "parent": parent,
-        "children": children
-    })
-    document.save()
-
-    return f"Inserted as {document.id}"
+# Start the show...
+if __name__ == "__main__":
+    app.run(host=APP_HOST, debug=APP_DEBUG)
