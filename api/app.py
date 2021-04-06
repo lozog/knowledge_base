@@ -1,12 +1,10 @@
 from flask import Flask
-from mongoengine import connect
+
 import routes
 
 app = Flask(__name__)
 
 app.register_blueprint(routes.blueprint)
-
-connect(host="mongodb://127.0.0.1:27017/knowledge_base")
 
 print(
     """
@@ -17,7 +15,6 @@ print(
 (// _  \  (|  _  \\  
 |: | \  \ |: |_)  :) 
 (__|  \__)(_______/  
-                     
 """
 )
 APP_HOST="localhost"
