@@ -48,6 +48,13 @@ def get_documents():
     return respond(documents=res)
 
 
+@blueprint.route('/documents/<document_id>', methods=["GET"])
+def get_document(document_id):
+    res = list(db.documents.find({"_id": ObjectId(document_id)}))
+
+    return respond(documents=res)
+
+
 @blueprint.route('/documents', methods=["POST"])
 @wrappers.json_request
 def create_document(body):
