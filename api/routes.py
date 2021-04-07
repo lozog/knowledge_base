@@ -17,14 +17,14 @@ def get_documents():
 
 @blueprint.route('/documents/<document_id>', methods=["GET"])
 def get_document(document_id):
-    res = list(db.documents.find({"_id": ObjectId(document_id)}))
+    res = db.documents.find_one({"_id": ObjectId(document_id)})
 
-    return respond(documents=res)
+    return respond(document=res)
 
 
 @blueprint.route('/documents', methods=["POST"])
-@wrappers.json_request
-def create_document(body):
+def create_document():
+    body = request.get_json()
     try:
         title = body["title"]
         content = body["content"]
@@ -41,4 +41,16 @@ def create_document(body):
     })
     document.save()
 
-    return f"Inserted as {document.id}"
+    return respond(document=document.to_mongo())
+
+
+@blueprint.route('/documents/<document_id>', methods=["PATCH"])
+def update_document(document_id):
+    body = request.get_json()
+    updated_document_count = Document.objects.update_one(id=document_id, **{
+        k: v
+        for k, v in body.items()
+        if k in ["title", "parent", "children", "content"]
+    })
+
+    return respond(updated_document_count=updated_document_count)
